@@ -1,0 +1,34 @@
+name: dotnet-ci
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-test-analyze:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restore
+        run: dotnet restore .\HeavenMaria.Wpf.sln
+
+      - name: Build (Analyzer + Warnings As Errors)
+        run: dotnet build .\HeavenMaria.Wpf.sln -c Release --no-restore -warnaserror
+
+      - name: Test
+        run: dotnet test .\HeavenMaria.Wpf.sln -c Release --no-build --verbosity normal

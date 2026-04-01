@@ -1,0 +1,11 @@
+﻿namespace HeavenMaria.Domain.Enums
+{
+    public enum GirlKeyType
+    {
+        None,
+        All,
+        NotHidden,
+        Favorite,
+        Legend,
+    }
+}

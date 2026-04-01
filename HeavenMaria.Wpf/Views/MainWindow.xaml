@@ -1,0 +1,206 @@
+﻿<Window
+    x:Class="HeavenMaria.Wpf.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter01="clr-namespace:HeavenMaria.Wpf.Converters"
+    xmlns:converters="clr-namespace:HeavenMaria.Wpf.Converters"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:prism="http://prismlibrary.com/"
+    Title="ヘブンネット日記アプリ"
+    Width="780"
+    Height="720"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding OnLoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Window.Resources>
+        <converters:DiaryTitleConverter x:Key="MyDiaryTitleConverter" />
+        <converters:FavoriteConverter x:Key="MyFavoriteConverter" />
+        <converters:LegendConverter x:Key="MyLegendConverter" />
+        <converters:GirlNameTrimer x:Key="MyGirlNameTrimer" />
+    </Window.Resources>
+
+    <Grid ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="16*" />
+            <RowDefinition Height="82*" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+
+            <ComboBox
+                Margin="10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                FontSize="16"
+                ItemsSource="{Binding Girls}"
+                SelectedItem="{Binding SelectedGirl, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                Text="{Binding DisplayName, Converter={StaticResource MyGirlNameTrimer}}" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+                <ComboBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding OpenProfilePageCommand}" Header="プロファイルをブラウザで開く" />
+                        <MenuItem
+                            Command="{Binding OpenDirectoryCommand}"
+                            CommandParameter="Profile"
+                            Header="プロファイルフォルダを開く" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding OpenDirectoryCommand}"
+                            CommandParameter="Old"
+                            Header="旧フォルダを開く" />
+                        <Separator />
+                        <MenuItem Header="嬢の選択">
+                            <MenuItem
+                                Command="{Binding SelectGirlsCommand}"
+                                CommandParameter="All"
+                                Header="全員" />
+                            <MenuItem
+                                Command="{Binding SelectGirlsCommand}"
+                                CommandParameter="NotHidden"
+                                Header="表示設定の嬢" />
+                            <MenuItem
+                                Command="{Binding SelectGirlsCommand}"
+                                CommandParameter="Favorite"
+                                Header="お気に入り" />
+                            <Separator />
+                            <MenuItem
+                                Command="{Binding SelectGirlsCommand}"
+                                CommandParameter="Legend"
+                                Header="レジェンド" />
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Command="{Binding HideThisGirlCommand}" Header="この嬢を隠す" />
+                        <Separator />
+                        <MenuItem Command="{Binding OpenSelectModeCommand}" Header="セレクトモード" />
+                    </ContextMenu>
+                </ComboBox.ContextMenu>
+            </ComboBox>
+
+            <ComboBox
+                Margin="10,0,10,0"
+                HorizontalAlignment="Stretch"
+                FontSize="16"
+                ItemsSource="{Binding Diaries}"
+                SelectedItem="{Binding SelectedDiary}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="10,0,0,0" Text="{Binding DiaryTitle}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+                <ComboBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding PlayVideo}" Header="動画を再生する" />
+                        <Separator />
+                        <MenuItem Command="{Binding OnlyMovieDiaries}" Header="動画日記のみ" />
+                        <Separator />
+                        <MenuItem Command="{Binding OpenDiaryCommand}" Header="日記を開く" />
+                        <Separator />
+                        <MenuItem
+                            Command="{Binding OpenDirectoryCommand}"
+                            CommandParameter="Current"
+                            Header="フォルダを開く" />
+                        <Separator />
+                        <MenuItem Header="日記の選択">
+                            <MenuItem
+                                Command="{Binding SelectDiaries}"
+                                CommandParameter="LostLinkDiaries"
+                                Header="画像のリンクが切れている日記"
+                                Visibility="Collapsed" />
+                            <MenuItem
+                                Command="{Binding SelectDiaries}"
+                                CommandParameter="FailureDiaries"
+                                Header="取得に失敗した日記"
+                                Visibility="Collapsed" />
+                            <MenuItem
+                                Command="{Binding ChoseDiariesCommand}"
+                                CommandParameter="GotWithoutLogIn"
+                                Header="ログインせずに取得した日記" />
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Command="{Binding DeleteDiaryCommand}" Header="この日記を削除する" />
+                    </ContextMenu>
+                </ComboBox.ContextMenu>
+            </ComboBox>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Image
+                Width="24"
+                Height="24"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Source="/UserObject/play.png">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <prism:InvokeCommandAction Command="{Binding PlayVideo}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid
+                Margin="0,0,0,0"
+                VerticalAlignment="Stretch"
+                Background="GhostWhite">
+                <TextBlock
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Cursor="Hand"
+                    FontSize="20"
+                    Text="{Binding SelectedGirl, Converter={StaticResource MyLegendConverter}}">
+                    <TextBlock.InputBindings>
+                        <MouseBinding
+                            Command="{Binding ReverseStatusCommand}"
+                            CommandParameter="Legend"
+                            MouseAction="LeftClick" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
+                <TextBlock
+                    Margin="0,0,20,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Cursor="Hand"
+                    FontSize="18"
+                    Text="{Binding SelectedGirl, Converter={StaticResource MyFavoriteConverter}}">
+                    <TextBlock.InputBindings>
+                        <MouseBinding
+                            Command="{Binding ReverseStatusCommand}"
+                            CommandParameter="Favorite"
+                            MouseAction="LeftClick" />
+                    </TextBlock.InputBindings>
+                </TextBlock>
+            </Grid>
+        </Grid>
+
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="ContentRegion" />
+
+    </Grid>
+</Window>
