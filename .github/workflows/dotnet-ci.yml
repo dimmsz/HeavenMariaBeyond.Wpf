@@ -25,10 +25,10 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Restore
-        run: dotnet restore .\HeavenMaria.Wpf.sln
+        run: dotnet restore .\HeavenMariaBeyond.sln
 
       - name: Build (Analyzer + Warnings As Errors)
-        run: dotnet build .\HeavenMaria.Wpf.sln -c Release --no-restore -warnaserror
+        run: dotnet build .\HeavenMariaBeyond.sln -c Release --no-restore -warnaserror
 
       - name: Test
-        run: dotnet test .\HeavenMaria.Wpf.sln -c Release --no-build --verbosity normal
+        run: dotnet test .\HeavenMariaBeyond.sln -c Release --no-build --verbosity normal

@@ -1,11 +1,11 @@
-# HeavenMaria.Wpf Developer Notes
+# HeavenMariaBeyond.Wpf Developer Notes
 
 This document summarizes the refactoring context and current technical baseline.
 
 ## Goals of Refactoring
 
-- Reduce responsibilities in `HeavenMaria.Wpf` ViewModels
-- Move use-case logic into `HeavenMaria.Service`
+- Reduce responsibilities in `HeavenMariaBeyond.Wpf` ViewModels
+- Move use-case logic into `HeavenMariaBeyond.Service`
 - Remove direct UI dependency on `Infrastructure`
 - Enforce quality gates with CI (`build + test + analyzer`)
 
@@ -16,6 +16,20 @@ This document summarizes the refactoring context and current technical baseline.
 - `Wpf -X-> Infrastructure` (disallowed)
 
 ## What Was Refactored
+
+### 0) Diary model and table access were unified
+
+Latest context:
+
+- `DiaryOld` was removed and the codebase was rewritten to use `Diary`
+- `DiariesTable` access was replaced with `Diaries` everywhere in SQL and repository flow
+- WPF view models, services, generators, converters, and path helpers now expect `Diary`
+- Remaining diary-related APIs should keep using `Diary` for both reads and deletes
+
+Notes:
+
+- The legacy `DiaryOld` type and `DiariesTable` queries were part of the previous data path
+- The migration keeps the same overall use-case flow, but the storage source is now `Diaries`
 
 ### 1) Query use-cases extracted from `MainWindowViewModel`
 
@@ -94,18 +108,18 @@ Result:
 
 Added:
 
-- `ContainerRegistryExtensions.RegisterHeavenMariaCore()`
+- `ContainerRegistryExtensions.RegisterHeavenMariaBeyondCore()`
 
 Result:
 
 - `App.xaml.cs` now delegates core registrations
-- `HeavenMaria.Wpf.csproj` no longer references `HeavenMaria.Infrastructure` directly
+- `HeavenMariaBeyond.Wpf.csproj` no longer references `HeavenMariaBeyond.Infrastructure` directly
 
 ### 8) Tests added
 
 Created test project:
 
-- `HeavenMaria.Service.Tests`
+- `HeavenMariaBeyond.Service.Tests`
 
 Implemented:
 
@@ -116,7 +130,7 @@ Implemented:
 Architecture guards validate:
 
 - `Wpf` project file does not reference `Infrastructure`
-- app bootstrapper uses `RegisterHeavenMariaCore()`
+- app bootstrapper uses `RegisterHeavenMariaBeyondCore()`
 
 ### 9) Warning cleanup and strict CI readiness
 
@@ -142,8 +156,8 @@ Behavior:
 Verified commands:
 
 ```powershell
-dotnet build .\HeavenMaria.Wpf.sln -c Release -warnaserror
-dotnet test .\HeavenMaria.Wpf.sln -c Release
+dotnet build .\HeavenMariaBeyond.sln -c Release -warnaserror
+dotnet test .\HeavenMariaBeyond.sln -c Release
 ```
 
 Current expected result:

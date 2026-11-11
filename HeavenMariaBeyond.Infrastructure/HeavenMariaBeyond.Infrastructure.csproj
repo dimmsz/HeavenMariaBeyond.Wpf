@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.8.5" />
+    <PackageReference Include="Dapper" Version="2.1.89" />
+    <PackageReference Include="MySql.Data" Version="26.7.0" />
+    <PackageReference Include="ZstdSharp.Port" Version="0.8.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HeavenMariaBeyond.Domain\HeavenMariaBeyond.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

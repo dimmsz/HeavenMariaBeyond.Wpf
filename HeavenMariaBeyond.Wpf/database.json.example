@@ -1,0 +1,6 @@
+{
+  "userId": "your-database-user",
+  "password": "your-database-password",
+  "database": "heavennet",
+  "host": "127.0.0.1"
+}

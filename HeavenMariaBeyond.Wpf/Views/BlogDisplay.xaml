@@ -1,0 +1,25 @@
+<UserControl
+    x:Class="HeavenMariaBeyond.Wpf.Views.BlogDisplay"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Loaded="OnLoaded">
+
+    <Grid>
+        <wv2:WebView2
+            x:Name="webView"
+            Height="540"
+            Margin="10,0,10,10"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch" />
+        <TextBlock
+            x:Name="displayError"
+            Margin="10"
+            Style="{StaticResource OperationErrorText}"
+            Text="日記の表示に必要な WebView2 を利用できませんでした。"
+            Visibility="Collapsed" />
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="9.0.537" />
+    <ProjectReference Include="..\HeavenMariaBeyond.Domain\HeavenMariaBeyond.Domain.csproj" />
+    <ProjectReference Include="..\HeavenMariaBeyond.Infrastructure\HeavenMariaBeyond.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

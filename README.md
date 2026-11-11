@@ -1,6 +1,6 @@
-# HeavenMaria.Wpf
+# HeavenMariaBeyond.Wpf
 
-WPF client for browsing and managing HeavenMaria data.
+WPF client for browsing and managing HeavenMariaBeyond data.
 
 ## Quick Start
 
@@ -12,28 +12,28 @@ WPF client for browsing and managing HeavenMaria data.
 ### Build
 
 ```powershell
-dotnet build .\HeavenMaria.Wpf.sln -c Release
+dotnet build .\HeavenMariaBeyond.sln -c Release
 ```
 
 ### Test
 
 ```powershell
-dotnet test .\HeavenMaria.Wpf.sln -c Release
+dotnet test .\HeavenMariaBeyond.sln -c Release
 ```
 
 ### Run
 
 ```powershell
-dotnet run --project .\HeavenMaria.Wpf\HeavenMaria.Wpf.csproj -c Debug
+dotnet run --project .\HeavenMariaBeyond.Wpf\HeavenMariaBeyond.Wpf.csproj -c Debug
 ```
 
 ## Project Structure
 
-- `HeavenMaria.Wpf`: UI layer
-- `HeavenMaria.Service`: use cases, orchestration, DI extension
-- `HeavenMaria.Infrastructure`: DB and external system implementations
-- `HeavenMaria.Domain`: domain models and contracts
-- `HeavenMaria.Service.Tests`: service and architecture guard tests
+- `HeavenMariaBeyond.Wpf`: UI layer
+- `HeavenMariaBeyond.Service`: use cases, orchestration, DI extension
+- `HeavenMariaBeyond.Infrastructure`: DB and external system implementations
+- `HeavenMariaBeyond.Domain`: domain models and contracts
+- `HeavenMariaBeyond.Service.Tests`: service and architecture guard tests
 
 ## Architecture Rule
 
